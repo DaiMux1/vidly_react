@@ -8,6 +8,17 @@ import _ from "lodash";
 import MoviesTable from './moviesTable';
 
 class Movies extends Component {
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     movies: [],
+  //     genres: [],
+  //     currentPage: 1,
+  //     pageSize: 4,
+  //     sortColumn: { path: 'title', order: 'asc' }
+  //   };
+  // }
+
   state = {
     movies: [],
     genres: [],
