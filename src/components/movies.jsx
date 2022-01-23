@@ -6,6 +6,12 @@ import ListGroup from './common/listGroup';
 import { getGenres } from '../services/fakeGenreService';
 import _ from "lodash";
 import MoviesTable from './moviesTable';
+import { Link } from 'react-router-dom';
+import Search from './common/searchBox';
+
+
+
+
 
 class Movies extends Component {
   // constructor() {
@@ -24,7 +30,8 @@ class Movies extends Component {
     genres: [],
     currentPage: 1,
     pageSize: 4,
-    sortColumn: { path: 'title', order: 'asc' }
+    sortColumn: { path: 'title', order: 'asc' },
+    search: ''
   };
 
   componentDidMount() {
@@ -50,21 +57,31 @@ class Movies extends Component {
   }
 
   handleGenreSelect = genre => {
-    this.setState({ selectedGenre: genre, currentPage: 1 })
+    this.setState({ selectedGenre: genre, currentPage: 1, search: '' })
   }
 
   handleSort = sortColumn => {
     this.setState({ sortColumn })
   }
 
-  getPagedDate = () => {
+  handleSearch = e => {
+    const search = e.target.value;
+    this.setState({ search, selectedGenre: '', currentPage: 1 });
+  }
+
+  getPagedData = () => {
     const { currentPage, pageSize, movies: allMovies,
-      genres, selectedGenre, sortColumn }
+      genres, selectedGenre, sortColumn, search }
       = this.state;
 
+    // const filtered = [];
     const filtered = selectedGenre && selectedGenre._id
       ? allMovies.filter(m => m.genre._id === selectedGenre._id)
-      : allMovies;
+      : allMovies.filter(m => (new RegExp(search, 'i').test(m.title)));
+    // if (selectedGenre) {
+    // } else {
+    //   filtered = 
+    // }
 
     const sorted = _.orderBy(filtered, sortColumn.path, sortColumn.order);
     const movies = paginate(sorted, currentPage, pageSize);
@@ -77,7 +94,7 @@ class Movies extends Component {
       genres, selectedGenre, sortColumn }
       = this.state;
 
-    const { count, data: movies } = this.getPagedDate();
+    const { count, data: movies } = this.getPagedData();
     // if (count === 0) return <p>There are no movies in database</p>
 
     return (
@@ -92,7 +109,15 @@ class Movies extends Component {
           </div>
 
           <div>
-            <span>Showing {count} movies in the database.</span>
+            <Link className="btn btn-primary" to='/movies/new' >
+              New Movie
+            </Link>
+            <p>Showing {count} movies in the database.</p>
+            <Search
+              value={this.state.search}
+              onSearch={this.handleSearch}
+            />
+
             <MoviesTable
               movies={movies}
               onDelete={this.handleDelete}
@@ -108,7 +133,7 @@ class Movies extends Component {
             />
           </div>
         </div>
-      </React.Fragment>
+      </React.Fragment >
     );
   }
 }
