@@ -7,6 +7,10 @@ import 'font-awesome/css/font-awesome.css';
 import App from './App';
 import BrowserRouter from 'react-router-dom/BrowserRouter';
 
+import logger from './services/logServices';
+
+logger.init();
+
 ReactDOM.render(
   <BrowserRouter>
     <App />
