@@ -1,8 +1,7 @@
 import http from './httpServices';
-import config from '../config.json';
 import _ from 'lodash'
 
-const apiEndpoint = config.apiUrl + '/movies';
+const apiEndpoint = '/movies';
 
 function movieUrl(id) {
   return `${apiEndpoint}/${id}`
