@@ -3,8 +3,8 @@ import Form from './common/form';
 import Joi from 'joi-browser';
 // import { getGenres } from '../services/fakeGenreService';
 // import { getMovie, saveMovie } from './../services/fakeMovieService';
-import { getGenres } from '../services/genreServices';
-import { getMovie, saveMovie } from '../services/movieServices';
+import { getGenres } from '../services/genreService';
+import { getMovie, saveMovie } from '../services/movieService';
 
 class MovieForm extends Form {
   state = {

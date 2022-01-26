@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import Pagination from './common/pagination';
 // import { getGenres } from '../services/fakeGenreService';
 // import { getMovies } from '../services/fakeMovieService';
-import { getGenres } from '../services/genreServices';
-import { getMovies, deleteMovie } from '../services/movieServices';
+import { getGenres } from '../services/genreService';
+import { getMovies, deleteMovie } from '../services/movieService';
 import { paginate } from '../utils/paginate';
+import auth from '../services/authService';
 import ListGroup from './common/listGroup';
 import _ from "lodash";
 import MoviesTable from './moviesTable';
@@ -115,12 +116,11 @@ class Movies extends Component {
       = this.state;
 
     const { count, data: movies } = this.getPagedData();
-    // if (count === 0) return <p>There are no movies in database</p>
-
+    const user = auth.getCurrentUser();
     return (
       <React.Fragment>
-        <div className='d-flex p-2'>
-          <div>
+        <div className='row'>
+          <div className='col-3'>
             <ListGroup
               items={genres}
               selectedItem={selectedGenre}
@@ -128,10 +128,12 @@ class Movies extends Component {
             />
           </div>
 
-          <div>
-            <Link className="btn btn-primary" to='/movies/new' >
-              New Movie
-            </Link>
+          <div className='col'>
+            {user &&
+              <Link className="btn btn-primary" to='/movies/new' >
+                New Movie
+              </Link>
+            }
             <p>Showing {count} movies in the database.</p>
             <Search
               value={this.state.search}
