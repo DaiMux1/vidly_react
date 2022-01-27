@@ -1,3 +1,7 @@
+# Deployment 
+
+This section has moved here: https://secret-dawn-97969.herokuapp.com/movies
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
